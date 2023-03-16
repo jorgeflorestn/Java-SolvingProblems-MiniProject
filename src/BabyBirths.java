@@ -89,6 +89,20 @@ public class BabyBirths {
         else return name;
     }
 
+    public void whatIsNameInYear (String name, int year, int newYear, String gender) {
+        int rank = 0;
+        String newName = null;
+        String genderGenerator;
+        rank = getRank(year, name, gender);
+        newName = getName(year, rank, gender);
+        if (gender.equals("F")) genderGenerator = "she";
+        else genderGenerator = "he";
+        System.out.println(name + ", born in " + year
+                + ", would be " + newName + " if " + genderGenerator
+                + " was born in " + newYear);
+    }
+
+
     //**************************************************************//
     //Test methods
     public void testTotalBirths () {
@@ -104,9 +118,15 @@ public class BabyBirths {
     }
     public void testGetName () {
         int year = 2012;
-        int rank = 1;
-        String gender = "M";
+        int rank = 4;
+        String gender = "F";
         System.out.println("For rank " + rank + " " + gender + " in " + year
                 + ", the name is " + getName(year, rank, gender));
+    }
+    public void testwhatIsNameInYear () {
+        String name = "Mary";
+        int year = 1880, newYear = 1959;
+        String gender = "F";
+        whatIsNameInYear();
     }
 }
