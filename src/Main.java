@@ -4,6 +4,10 @@ public class Main {
         //a.printNames();
         //a.testTotalBirths();
         //a.testGetRank();
-        a.testGetName();
+        //a.testGetName();
+        //a.testWhatIsNameInYear();
+        //a.testYearOfHighestRank();
+        //a.testGetAverageRank();
+        a.testGetTotalBirthsRankedHigher();
     }
 }

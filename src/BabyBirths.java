@@ -50,7 +50,6 @@ public class BabyBirths {
         for (CSVRecord rec : fr.getCSVParser(false)) {
             if (rec.get(1).equals(gender)) nameCount ++;
         }
-        System.out.println(nameCount);
 
 
         // Part 3: data analysis
@@ -94,7 +93,7 @@ public class BabyBirths {
         String newName = null;
         String genderGenerator;
         rank = getRank(year, name, gender);
-        newName = getName(year, rank, gender);
+        newName = getName(newYear, rank, gender);
         if (gender.equals("F")) genderGenerator = "she";
         else genderGenerator = "he";
         System.out.println(name + ", born in " + year
@@ -102,6 +101,50 @@ public class BabyBirths {
                 + " was born in " + newYear);
     }
 
+    public int yearOfHighestRank (String name, String gender) {
+        int rankYear = 2012;
+        int rank1 = 500000;
+
+        for (int i = 2012; i < 2015; i++) {
+            int a = getRank(i, name, gender);
+            if (a == -1) continue;
+            if (a < rank1) rank1 = a;
+        }
+        if (rank1 == 500000) return -1;
+        else return rankYear;
+    }
+
+    public double getAverageRank (String name, String gender) {
+        double sum = 0, pivot;
+        double numValidYear = 0;
+
+        for (int i = 2012; i < 2015; i++) {
+            pivot = (double) getRank(i, name, gender);
+            if (pivot != -1) {
+                sum += pivot;
+                numValidYear ++;
+            }
+        }
+        if (sum == 0) return -1.0;
+        else return ((double) sum) / ((double) numValidYear);
+    }
+    public int getTotalBirthsRankedHigher (int year, String name, String gender) {
+        int rank = getRank(year, name, gender);
+        int totalBirths = 0;
+        if (rank == -1) return -1;
+        String parsingFormat = "media/us_babynames_test/yob" + year + "short.csv";
+        FileResource fr = new FileResource(parsingFormat);
+
+        for (CSVRecord rec : fr.getCSVParser(false)) {
+            //Filter by gender
+            if (!rec.get(1).equals(gender)) continue;
+
+            //Rank
+            String nName = rec.get(0), nGender = rec.get(1);
+            if (getRank(year, nName, nGender) < rank) totalBirths += Integer.parseInt(rec.get(2));
+        }
+        return totalBirths;
+    }
 
     //**************************************************************//
     //Test methods
@@ -123,10 +166,26 @@ public class BabyBirths {
         System.out.println("For rank " + rank + " " + gender + " in " + year
                 + ", the name is " + getName(year, rank, gender));
     }
-    public void testwhatIsNameInYear () {
+    public void testWhatIsNameInYear () {
         String name = "Mary";
-        int year = 1880, newYear = 1959;
+        int year = 1880, newYear = 1962;
         String gender = "F";
-        whatIsNameInYear();
+        whatIsNameInYear(name, year, newYear, gender);
+    }
+    public void testYearOfHighestRank () {
+        String name = "Mason";
+        String gender = "M";
+        System.out.println(yearOfHighestRank(name, gender));
+    }
+    public void testGetAverageRank () {
+        String name = "Jacob";
+        String gender = "M";
+        System.out.println(getAverageRank(name, gender));
+    }
+    public void testGetTotalBirthsRankedHigher () {
+        int year = 2012;
+        String name = "Ethan";
+        String gender = "M";
+        System.out.println(getTotalBirthsRankedHigher(year, name, gender));
     }
 }
