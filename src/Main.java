@@ -7,7 +7,7 @@ public class Main {
         //a.testGetName();
         //a.testWhatIsNameInYear();
         //a.testYearOfHighestRank();
-        //a.testGetAverageRank();
-        a.testGetTotalBirthsRankedHigher();
+        a.testGetAverageRank();
+        //a.testGetTotalBirthsRankedHigher();
     }
 }
